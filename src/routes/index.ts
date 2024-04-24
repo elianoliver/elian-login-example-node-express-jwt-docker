@@ -1,5 +1,8 @@
-import { Router } from 'express'
-import root from './root'
+import { Router, json } from "express"
+import userRouter from "./user"
+
 const router = Router()
-router.use(root)
+router.use(json())
+router.use('/user', userRouter)
+router.get('/', (req, res) => res.send('Hello World!'))
 export default router
