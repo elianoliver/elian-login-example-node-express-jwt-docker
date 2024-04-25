@@ -155,6 +155,8 @@ Neste arquivo, definimos as seguintes opções de configuração:
 
 - exclude: especifica os arquivos a serem excluídos da compilação. Neste caso, estamos excluindo a pasta node_modules.
 
+
+
 ## Execução
 
 ```bash
