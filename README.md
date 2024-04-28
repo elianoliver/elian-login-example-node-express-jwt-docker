@@ -321,8 +321,141 @@ PORT=3000
 
 Neste arquivo, definimos a variável de ambiente PORT com o valor 3000. Esta variável é usada no arquivo index.ts para configurar a porta do servidor Express.
 
-## Execução
+## Execução dos scripts package.json
 
+Para executar os scripts definidos no arquivo package.json, você pode usar o comando npm run script-name. Por exemplo, para iniciar o servidor Node.js em modo de desenvolvimento, você pode executar o seguinte comando:
+  
 ```bash
 npm run dev
+```
+
+Este comando executa o script dev definido no arquivo package.json, que inicia o servidor Node.js em modo de desenvolvimento usando o Nodemon para reiniciar automaticamente o servidor quando as alterações são detectadas.
+
+Para compilar o código TypeScript em JavaScript, você pode executar o seguinte comando:
+
+```bash
+npm run build
+```
+
+Este comando executa o script build definido no arquivo package.json, que compila o código TypeScript em JavaScript usando o compilador TypeScript.
+
+Para iniciar o servidor Node.js após a compilação do código TypeScript, você pode executar o seguinte comando:
+
+```bash
+npm start
+```
+
+Este comando executa o script start definido no arquivo package.json, que inicia o servidor Node.js após a compilação do código TypeScript.
+
+# Desenvolvimento de uma API RESTful com Node.js e TypeScript
+
+Neste tutorial, você aprenderá a desenvolver uma API RESTful com Node.js e TypeScript. Uma API RESTful é uma interface de programação de aplicativos que segue os princípios da arquitetura REST (Representational State Transfer). Ela permite que os clientes se comuniquem com o servidor por meio de solicitações HTTP, como GET, POST, PUT e DELETE.
+
+## Criando a rota de usuários
+
+Neste tutorial, vamos criar uma rota de usuários para uma API RESTful. Esta rota permitirá que os clientes criem, leiam, atualizem e excluam usuários em um banco de dados SQLite.
+
+### Criando o modelo de usuário
+
+O primeiro passo é criar o modelo de usuário que representa a entidade de usuário em nosso aplicativo. O modelo de usuário contém os campos de dados que representam um usuário, como nome, e-mail e senha.
+
+Para fins didáticos, vamos criar um modelo de usuário simples com os seguintes campos:
+
+- id: o ID exclusivo do usuário.
+- name: o nome do usuário.
+- email: o e-mail do usuário.
+- password: a senha do usuário.
+
+para manter o exemplo simples vamos cria um rota e diretamente na rota faremos as ações de CRUD, create, read, update e delete, e para tratar os dados de entrada vamos usar a biblioteca Zod para validar os dados de entrada.
+
+### Instalando a biblioteca Zod
+
+Para instalar a biblioteca Zod, você pode usar o comando npm install zod. A biblioteca Zod é uma biblioteca de validação de esquema para TypeScript e JavaScript. Ela permite que você defina esquemas de validação de dados de forma declarativa e os use para validar e transformar dados em seu aplicativo.
+
+```bash
+npm install zod
+```
+
+### Criando a rota de usuários
+
+Agora que instalamos a biblioteca Zod, podemos criar a rota de usuários em nosso aplicativo Node.js. A rota de usuários será responsável por lidar com as solicitações HTTP relacionadas aos usuários, como criar, ler, atualizar e excluir usuários.
+
+Vamos criar a rota de usuários no arquivo routes.ts:
+
+```typescript
+import { Router } from 'express';
+import { z } from 'zod';
+import { connect } from './database';
+
+const router = Router();
+
+const userSchema = z.object({
+  name: z.string(),
+  email: z.string().email(),
+  password: z.string().min(6),
+});
+
+router.post('/users', async (req, res) => {
+  const { name, email, password } = userSchema.parse(req.body);
+
+  const db = await connect();
+  const result = await db.run(
+    'INSERT INTO users (name, email, password) VALUES (?, ?, ?)',
+    [name, email, password]
+  );
+
+  res.json({ id: result.lastID, name, email });
+});
+
+router.get('/users', async (req, res) => {
+  const db = await connect();
+  const users = await db.all('SELECT * FROM users');
+
+  res.json(users);
+});
+
+router.get('/users/:id', async (req, res) => {
+  const { id } = req.params;
+
+  const db = await connect();
+  const user = await db.get('SELECT * FROM users WHERE id = ?', [id]);
+
+  if (!user) {
+    return res.status(404).json({ error: 'User not found' });
+  }
+
+  res.json(user);
+});
+
+router.put('/users/:id', async (req, res) => {
+  const { id } = req.params;
+  const { name, email, password } = userSchema.parse(req.body);
+
+  const db = await connect();
+  const result = await db.run(
+    'UPDATE users SET name = ?, email = ?, password = ? WHERE id = ?',
+    [name, email, password, id]
+  );
+
+  if (result.changes === 0) {
+    return res.status(404).json({ error: 'User not found' });
+  }
+
+  res.json({ id, name, email });
+});
+
+router.delete('/users/:id', async (req, res) => {
+  const { id } = req.params;
+
+  const db = await connect();
+  const result = await db.run('DELETE FROM users WHERE id = ?', [id]);
+
+  if (result.changes === 0) {
+    return res.status(404).json({ error: 'User not found' });
+  }
+
+  res.json({ id });
+});
+
+export default router;
 ```
