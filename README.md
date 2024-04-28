@@ -1,6 +1,7 @@
-# Desenvolvimento de uma API RESTful com Node.js e TypeScript
+# Desenvolvimento de um sistema web com Node.js e TypeScript com autenticação JWT e banco de dados SQLite
 
-Neste tutorial, você aprenderá a desenvolver uma API RESTful com Node.js e TypeScript. Uma API RESTful é uma interface de programação de aplicativos que segue os princípios da arquitetura REST (Representational State Transfer). Ela permite que os clientes se comuniquem com o servidor por meio de solicitações HTTP, como GET, POST, PUT e DELETE.
+Neste tutorial, você aprenderá a desenvolver um sistema web com Node.js e TypeScript. O sistema web será uma API RESTful que permite aos usuários criar, ler, atualizar e excluir usuários em um banco de dados SQLite. Além disso, o sistema web terá uma rota de autenticação que permite aos usuários fazer login e gerar um token de autenticação JWT (JSON Web Token).
+
 
 ## Ferramentes necessárias
 
