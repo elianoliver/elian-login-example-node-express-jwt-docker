@@ -368,14 +368,6 @@ Para fins didáticos, vamos criar um modelo de usuário simples com os seguintes
 
 para manter o exemplo simples vamos cria um rota e diretamente na rota faremos as ações de CRUD, create, read, update e delete, e para tratar os dados de entrada vamos usar a biblioteca Zod para validar os dados de entrada.
 
-### Instalando a biblioteca Zod
-
-Para instalar a biblioteca Zod, você pode usar o comando npm install zod. A biblioteca Zod é uma biblioteca de validação de esquema para TypeScript e JavaScript. Ela permite que você defina esquemas de validação de dados de forma declarativa e os use para validar e transformar dados em seu aplicativo.
-
-```bash
-npm install zod
-```
-
 ### Criando a rota de usuários
 
 Agora que instalamos a biblioteca Zod, podemos criar a rota de usuários em nosso aplicativo Node.js. A rota de usuários será responsável por lidar com as solicitações HTTP relacionadas aos usuários, como criar, ler, atualizar e excluir usuários.
@@ -484,14 +476,6 @@ Além da rota de usuários, vamos criar uma rota de autenticação para autentic
 
 Para manter o exemplo simples, vamos criar uma rota de autenticação que valida o e-mail e a senha do usuário e gera um token de autenticação JWT (JSON Web Token) se as credenciais forem válidas.
 
-### Instalando a biblioteca Jsonwebtoken
-
-Para instalar a biblioteca Jsonwebtoken, você pode usar o comando npm install jsonwebtoken. A biblioteca Jsonwebtoken é uma biblioteca para criar e verificar tokens de autenticação JWT (JSON Web Tokens) em aplicativos Node.js. Ela é amplamente utilizada para autenticar usuários e proteger rotas em aplicativos da web e APIs.
-
-```bash
-npm install jsonwebtoken
-```
-
 ### Criando a rota de autenticação
 
 Agora que instalamos a biblioteca Jsonwebtoken, podemos criar a rota de autenticação em nosso aplicativo Node.js. A rota de autenticação será responsável por autenticar os usuários e gerar um token de autenticação JWT se as credenciais forem válidas.
@@ -576,3 +560,41 @@ Neste código, importamos os módulos Request, Response e NextFunction do Expres
 
 A função authenticate verifica se o token de autenticação JWT é válido e decodifica as informações do usuário contidas no token. Se o token for válido, a função adiciona as informações do usuário ao objeto de solicitação req e chama a função next para continuar o fluxo de solicitação.
 
+### Protegendo rotas com middleware de autenticação
+
+Agora que criamos o middleware de autenticação, podemos proteger as rotas da API que requerem autenticação. Para proteger uma rota com o middleware de autenticação, basta adicionar o middleware de autenticação à pilha de middleware da rota.
+
+Vamos proteger a rota GET /users usando o middleware de autenticação:
+
+```typescript
+import { Router } from 'express';
+import { z } from 'zod';
+import { connect } from './database';
+import jwt from 'jsonwebtoken';
+import { authenticate } from './auth';
+
+const router = Router();
+
+router.get('/users', authenticate, async (req, res) => {
+  const db = await connect();
+  const users = await db.all('SELECT * FROM users');
+
+  res.json(users);
+});
+
+export default router;
+```
+
+Neste código, importamos o middleware de autenticação authenticate do arquivo auth.ts. Em seguida, protegemos a rota GET /users adicionando o middleware de autenticação authenticate à pilha de middleware da rota.
+
+Agora, a rota GET /users requer autenticação e só pode ser acessada por usuários autenticados com um token de autenticação JWT válido.
+
+## Conclusão
+
+Neste tutorial, você aprendeu a desenvolver uma API RESTful com Node.js e TypeScript. Você criou rotas para usuários e autenticação, validou os dados de entrada usando a biblioteca Zod, gerou tokens de autenticação JWT usando a biblioteca Jsonwebtoken e protegeu rotas com um middleware de autenticação.
+
+O Node.js e o TypeScript são uma combinação poderosa para o desenvolvimento de aplicativos da web e APIs. O TypeScript adiciona tipagem estática opcional ao JavaScript, melhorando a segurança, a legibilidade e a manutenção do código. O Node.js é um ambiente de execução JavaScript baseado no motor V8 do Chrome, amplamente utilizado para criar aplicativos da web e APIs escaláveis e de alto desempenho.
+
+Espero que este tutorial tenha sido útil e que você tenha aprendido a desenvolver uma API RESTful com Node.js e TypeScript. Se você tiver alguma dúvida ou sugestão, sinta-se à vontade para deixar um comentário abaixo.
+
+Obrigado por ler e boa sorte em seus projetos de desenvolvimento de software!
