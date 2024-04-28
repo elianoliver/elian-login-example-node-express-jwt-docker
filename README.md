@@ -459,3 +459,120 @@ router.delete('/users/:id', async (req, res) => {
 
 export default router;
 ```
+
+Neste código, importamos os módulos Router, z e connect. Em seguida, criamos uma instância de roteador chamada router.
+
+Em seguida, definimos um esquema de usuário userSchema usando a biblioteca Zod. O esquema de usuário contém as seguintes propriedades:
+
+- name: uma string que representa o nome do usuário.
+- email: uma string que representa o e-mail do usuário.
+- password: uma string que representa a senha do usuário.
+
+Em seguida, definimos as rotas da API para criar, ler, atualizar e excluir usuários:
+
+- A rota POST /users é usada para criar um novo usuário no banco de dados. Ela valida os dados de entrada usando o esquema de usuário userSchema e insere os dados na tabela users do banco de dados SQLite.
+- A rota GET /users é usada para recuperar todos os usuários da tabela users do banco de dados.
+- A rota GET /users/:id é usada para recuperar um usuário específico com base no ID fornecido na URL.
+- A rota PUT /users/:id é usada para atualizar um usuário existente com base no ID fornecido na URL. Ela valida os dados de entrada usando o esquema de usuário userSchema e atualiza os dados na tabela users do banco de dados SQLite.
+- A rota DELETE /users/:id é usada para excluir um usuário existente com base no ID fornecido na URL.
+
+Por fim, exportamos o objeto de roteador router para que ele possa ser usado no arquivo index.ts.
+
+### Criando a rota de autenticação
+
+Além da rota de usuários, vamos criar uma rota de autenticação para autenticar usuários em nosso aplicativo Node.js. A rota de autenticação permitirá que os usuários façam login no aplicativo usando um e-mail e uma senha.
+
+Para manter o exemplo simples, vamos criar uma rota de autenticação que valida o e-mail e a senha do usuário e gera um token de autenticação JWT (JSON Web Token) se as credenciais forem válidas.
+
+### Instalando a biblioteca Jsonwebtoken
+
+Para instalar a biblioteca Jsonwebtoken, você pode usar o comando npm install jsonwebtoken. A biblioteca Jsonwebtoken é uma biblioteca para criar e verificar tokens de autenticação JWT (JSON Web Tokens) em aplicativos Node.js. Ela é amplamente utilizada para autenticar usuários e proteger rotas em aplicativos da web e APIs.
+
+```bash
+npm install jsonwebtoken
+```
+
+### Criando a rota de autenticação
+
+Agora que instalamos a biblioteca Jsonwebtoken, podemos criar a rota de autenticação em nosso aplicativo Node.js. A rota de autenticação será responsável por autenticar os usuários e gerar um token de autenticação JWT se as credenciais forem válidas.
+
+Vamos criar a rota de autenticação no arquivo routes.ts:
+
+```typescript
+import { Router } from 'express';
+import { z } from 'zod';
+import { connect } from './database';
+import jwt from 'jsonwebtoken';
+
+const router = Router();
+
+const loginSchema = z.object({
+  email: z.string().email(),
+  password: z.string().min(6),
+});
+
+router.post('/login', async (req, res) => {
+  const { email, password } = loginSchema.parse(req.body);
+
+  const db = await connect();
+  const user = await db.get('SELECT * FROM users WHERE email = ? AND password = ?', [email, password]);
+
+  if (!user) {
+    return res.status(401).json({ error: 'Invalid credentials' });
+  }
+
+  const token = jwt.sign({ id: user.id, email: user.email }, process.env.JWT_SECRET || 'secret', {
+    expiresIn: '1h',
+  });
+
+  res.json({ token });
+});
+
+export default router;
+```
+
+Neste código, importamos os módulos Router, z, connect e jwt. Em seguida, criamos uma instância de roteador chamada router.
+
+Em seguida, definimos um esquema de login loginSchema usando a biblioteca Zod. O esquema de login contém as seguintes propriedades:
+
+- email: uma string que representa o e-mail do usuário.
+- password: uma string que representa a senha do usuário.
+
+Em seguida, definimos a rota POST /login para autenticar os usuários. A rota de autenticação valida os dados de entrada usando o esquema de login loginSchema e verifica se o e-mail e a senha correspondem a um usuário existente na tabela users do banco de dados SQLite.
+
+Se as credenciais forem válidas, a rota de autenticação gera um token de autenticação JWT usando a função jwt.sign. O token de autenticação contém o ID e o e-mail do usuário e expira em 1 hora.
+
+Por fim, exportamos o objeto de roteador router para que ele possa ser usado no arquivo index.ts.
+
+### Criando middleware de autenticação
+
+Além da rota de autenticação, vamos criar um middleware de autenticação para proteger as rotas da API que requerem autenticação. O middleware de autenticação verifica se o token de autenticação JWT é válido e decodifica as informações do usuário contidas no token.
+
+Para criar o middleware de autenticação, vamos criar um arquivo auth.ts:
+
+```typescript
+import { Request, Response, NextFunction } from 'express';
+import jwt from 'jsonwebtoken';
+
+export function authenticate(req: Request, res: Response, next: NextFunction) {
+  const token = req.headers.authorization?.split(' ')[1];
+
+  if (!token) {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
+
+  jwt.verify(token, process.env.JWT_SECRET || 'secret', (err, decoded) => {
+    if (err) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+
+    req.user = decoded;
+    next();
+  });
+}
+```
+
+Neste código, importamos os módulos Request, Response e NextFunction do Express e jwt. Em seguida, exportamos uma função authenticate que atua como um middleware de autenticação.
+
+A função authenticate verifica se o token de autenticação JWT é válido e decodifica as informações do usuário contidas no token. Se o token for válido, a função adiciona as informações do usuário ao objeto de solicitação req e chama a função next para continuar o fluxo de solicitação.
+
