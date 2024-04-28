@@ -1,7 +1,6 @@
+# Desenvolvimento de uma API RESTful com Node.js e TypeScript
 
-# XYZ
-
-...
+Neste tutorial, você aprenderá a desenvolver uma API RESTful com Node.js e TypeScript. Uma API RESTful é uma interface de programação de aplicativos que segue os princípios da arquitetura REST (Representational State Transfer). Ela permite que os clientes se comuniquem com o servidor por meio de solicitações HTTP, como GET, POST, PUT e DELETE.
 
 ## Ferramentes necessárias
 
@@ -351,9 +350,7 @@ npm start
 
 Este comando executa o script start definido no arquivo package.json, que inicia o servidor Node.js após a compilação do código TypeScript.
 
-# Desenvolvimento de uma API RESTful com Node.js e TypeScript
-
-Neste tutorial, você aprenderá a desenvolver uma API RESTful com Node.js e TypeScript. Uma API RESTful é uma interface de programação de aplicativos que segue os princípios da arquitetura REST (Representational State Transfer). Ela permite que os clientes se comuniquem com o servidor por meio de solicitações HTTP, como GET, POST, PUT e DELETE.
+# XXXXX
 
 ## Criando a rota de usuários
 
