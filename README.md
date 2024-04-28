@@ -5,15 +5,19 @@
 
 ## Ferramentes necessárias
 
-### [VSCode](https://code.visualstudio.com/)
+### [Visual Dtudio Code - VSCode](https://code.visualstudio.com/)
 
 O Visual Studio Code é um editor de código-fonte desenvolvido pela Microsoft para Windows, Linux e macOS. Ele inclui suporte para depuração, controle de versão Git incorporado, realce de sintaxe, complementação inteligente de código, snippets e refatoração de código.
+
+#### Extensões Recomendadas
+
+- [Rest Client](https://marketplace.visualstudio.com/items?itemName=humao.rest-client): Uma extensão do Visual Studio Code para testar solicitações HTTP.
 
 ### [Node.js](https://nodejs.org/en/)
 
 O Node.js é um ambiente de execução JavaScript baseado no motor V8 do Chrome. Ele permite que você execute código JavaScript no lado do servidor, fora de um navegador da web. O Node.js é amplamente utilizado para criar aplicativos de rede e é conhecido por sua escalabilidade e desempenho.
 
-### [NPM](https://www.npmjs.com/)
+### [Node Package Manager - NPM](https://www.npmjs.com/)
 
 O npm (Node Package Manager) é o gerenciador de pacotes padrão para o ecossistema do Node.js. Ele é uma ferramenta essencial para desenvolvedores Node.js, pois permite instalar, gerenciar e compartilhar bibliotecas e ferramentas JavaScript de maneira eficiente.
 
