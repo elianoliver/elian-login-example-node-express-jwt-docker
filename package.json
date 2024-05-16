@@ -1,10 +1,12 @@
 {
   "name": "tsi-ead",
   "version": "1.0.0",
-  "description": "",
+  "description": "Neste tutorial, você aprenderá a desenvolver um sistema web com Node.js e TypeScript. O sistema web será uma API RESTful que permite aos usuários criar, ler, atualizar e excluir usuários em um banco de dados SQLite. Além disso, o sistema web terá uma rota de autenticação que permite aos usuários fazer login e gerar um token de autenticação JWT (JSON Web Token).",
   "main": "index.js",
   "scripts": {
+    "start": "node dist/index.js",
     "dev": "nodemon src/index.ts",
+    "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -26,5 +28,8 @@
     "sqlite": "^5.1.1",
     "sqlite3": "^5.1.7",
     "zod": "^3.23.4"
+  },
+  "directories": {
+    "test": "tests"
   }
 }

@@ -1,7 +1,7 @@
 import 'dotenv/config'
 import "./database"
 import express from 'express'
-import router from './routes'
+import router from './src/routes'
 
 const envsNames = ["JWT_SECRET", "PORT"]
 const notFoundEnvs = envsNames.filter((e: string) => !process.env[e])
@@ -14,4 +14,4 @@ if (notFoundEnvs.length) {
 const app = express()
 const PORT = process.env.PORT || 3000
 app.use(router)
-app.listen(PORT, () => console.log(`⚡ Server is running on port ${PORT}`))
+app.listen(PORT, () => console.log(`⚡ Server is running on port http://localhost:${PORT}`))

@@ -9,7 +9,8 @@ void async function () {
   await connection.exec(`
     CREATE TABLE IF NOT EXISTS users (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
-      username TEXT NOT NULL UNIQUE,
+      name TEXT NOT NULL,
+      email TEXT NOT NULL UNIQUE,
       password TEXT NOT NULL
     )
   `)
@@ -26,7 +27,7 @@ void async function () {
 
   try {
     await connection.exec(`
-    INSERT INTO users (username, password) VALUES ('admin', 'admin')
+    INSERT INTO users (name, email, password) VALUES ('admin', 'admin@example.com', 'admin')
   `)
   } catch (error) {
     console.log("User admin already exists")

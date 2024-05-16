@@ -13,5 +13,8 @@ if (notFoundEnvs.length) {
 
 const app = express()
 const PORT = process.env.PORT || 3000
+
+app.use(express.json()) // Adiciona o middleware express.json()
 app.use(router)
-app.listen(PORT, () => console.log(`⚡ Server is running on port ${PORT}`))
+
+app.listen(PORT, () => console.log(`⚡ Server is running on port http://localhost:${PORT}`))

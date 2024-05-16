@@ -1,17 +1,37 @@
-POST http://localhost:3000/user HTTP/1.1
+### POST USER
+POST http://localhost:3000/users HTTP/1.1
 Content-Type: application/json
 
 {
-  "username": "admin",
-  "password": "admin"
+  "name": "Test User",
+  "email": "test@example.com",
+  "password": "password123"
 }
 
-###
+### GET ALL USERS
+GET http://localhost:3000/users HTTP/1.1
 
-PUT http://localhost:3000/user/1 HTTP/1.1
+### GET USER BY ID
+GET http://localhost:3000/users/1 HTTP/1.1
+
+### UPDATE USER
+PUT http://localhost:3000/users/1 HTTP/1.1
 Content-Type: application/json
 
 {
-  "username": "admin",
-  "password": "admin"
+  "name": "Updated User",
+  "email": "updated@example.com",
+  "password": "newpassword123"
+}
+
+### DELETE USER
+DELETE http://localhost:3000/users/1 HTTP/1.1
+
+### POST LOGIN
+POST http://localhost:3000/login HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "password123"
 }
