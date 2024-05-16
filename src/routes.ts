@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { z } from 'zod';
 import { connect } from '../database';
 import jwt from 'jsonwebtoken';
+import { authenticate } from './routes/auth';
 
 const router = Router();
 
@@ -28,7 +29,7 @@ router.post('/users', async (req, res) => {
   res.json({ id: result.lastID, name, email });
 });
 
-router.get('/users', async (req, res) => {
+router.get('/users', authenticate, async (req, res) => {
   const db = await connect();
   const users = await db.all('SELECT * FROM users');
 

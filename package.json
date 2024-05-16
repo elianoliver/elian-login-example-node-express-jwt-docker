@@ -15,10 +15,10 @@
   "devDependencies": {
     "@types/express": "^4.17.21",
     "@types/jsonwebtoken": "^9.0.6",
-    "@types/node": "^20.12.3",
+    "@types/node": "^20.12.12",
     "nodemon": "^3.1.0",
     "ts-node": "^10.9.2",
-    "typescript": "^5.4.3"
+    "typescript": "^5.4.5"
   },
   "dependencies": {
     "cors": "^2.8.5",
@@ -27,7 +27,7 @@
     "jsonwebtoken": "^9.0.2",
     "sqlite": "^5.1.1",
     "sqlite3": "^5.1.7",
-    "zod": "^3.23.4"
+    "zod": "^3.23.8"
   },
   "directories": {
     "test": "tests"
