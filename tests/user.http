@@ -27,8 +27,8 @@ POST http://localhost:3000/user HTTP/1.1
 Content-Type: application/json
 
 {
-  "username": "Lucas",
-  "password": "12345678"
+  "username": "teste",
+  "password": "12345"
 }
 
 ###
@@ -37,6 +37,6 @@ POST http://localhost:3000/login HTTP/1.1
 Content-Type: application/json
 
 {
-  "username": "Lucas",
+  "username": "teste",
   "password": "12345678"
 }
