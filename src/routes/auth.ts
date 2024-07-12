@@ -1,23 +1,9 @@
-import { Request, Response, NextFunction } from 'express';
-import jwt from 'jsonwebtoken';
+import { Router } from "express";
 
-interface RequestWithUser extends Request {
-  user?: jwt.JwtPayload;
-}
+const router = Router();
 
-export function authenticate(req: RequestWithUser, res: Response, next: NextFunction) {
-  const token = req.headers.authorization?.split(' ')[1];
+router.post("/login", async (req, res) => {
+  const { username, password } = req.body;
+});
 
-  if (!token) {
-    return res.status(401).json({ error: 'Unauthorized' });
-  }
-
-  jwt.verify(token, process.env.JWT_SECRET || 'secret', (err, decoded) => {
-    if (err) {
-      return res.status(401).json({ error: 'Unauthorized' });
-    }
-
-    req.user = decoded as jwt.JwtPayload;
-    next();
-  });
-}
+export default router;

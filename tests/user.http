@@ -1,49 +1,42 @@
-### GET ALL USERS
-GET http://localhost:3000/users HTTP/1.1
+### get all users
+GET http://localhost:3000/user HTTP/1.1
 
-### GET ALL USERS
-GET http://localhost:3000/users HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzE1ODI2MTY3LCJleHAiOjE3MTU4Mjk3Njd9.xcpcRNux_ZVOJIwQlqsJlQn_09mDbevK3Ovlt9Fu87w
 
-### GET USER BY ID
-GET http://localhost:3000/users/1 HTTP/1.1
 
-### POST USER
-POST http://localhost:3000/users HTTP/1.1
+POST http://localhost:3000/user HTTP/1.1
 Content-Type: application/json
 
 {
-  "name": "Test User",
-  "email": "test@example.com",
-  "password": "password123"
+  "username": "admin",
+  "password": "admin"
 }
 
-### UPDATE USER
-PUT http://localhost:3000/users/1 HTTP/1.1
+###
+
+PUT http://localhost:3000/user/1 HTTP/1.1
 Content-Type: application/json
 
 {
-  "name": "Updated User",
-  "email": "updated@example.com",
-  "password": "newpassword123"
+  "username": "admin",
+  "password": "admin"
 }
 
-### DELETE USER
-DELETE http://localhost:3000/users/1 HTTP/1.1
+###
 
-### POST LOGIN
+POST http://localhost:3000/user HTTP/1.1
+Content-Type: application/json
+
+{
+  "username": "Lucas",
+  "password": "12345678"
+}
+
+###
+
 POST http://localhost:3000/login HTTP/1.1
 Content-Type: application/json
 
 {
-  "email": "test@example.com",
-  "password": "password123"
-}
-### POST LOGIN
-POST http://localhost:3000/login HTTP/1.1
-Content-Type: application/json
-
-{
-  "email": "testtt@example.com",
-  "password": "password123"
+  "username": "Lucas",
+  "password": "12345678"
 }

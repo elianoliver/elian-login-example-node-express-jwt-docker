@@ -1,19 +1,18 @@
-import { Database as driver } from "sqlite3"
-import { open } from "sqlite"
-const filename = "database.sqlite"
-const databaseConnectionPromise = open({ driver, filename })
+import { Database as driver } from "sqlite3";
+import { open } from "sqlite";
+const filename = "database.sqlite";
+const databaseConnectionPromise = open({ driver, filename });
 
-void async function () {
-  const connection = await databaseConnectionPromise
+void (async function () {
+  const connection = await databaseConnectionPromise;
 
   await connection.exec(`
     CREATE TABLE IF NOT EXISTS users (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
-      name TEXT NOT NULL,
-      email TEXT NOT NULL UNIQUE,
+      username TEXT NOT NULL UNIQUE,
       password TEXT NOT NULL
     )
-  `)
+  `);
 
   await connection.exec(`
     CREATE TABLE IF NOT EXISTS posts (
@@ -23,15 +22,15 @@ void async function () {
       userId INTEGER NOT NULL,
       FOREIGN KEY (userId) REFERENCES users(id)
     )
-  `)
+  `);
 
   try {
     await connection.exec(`
-    INSERT INTO users (name, email, password) VALUES ('admin', 'admin@example.com', 'admin')
-  `)
+    INSERT INTO users (username, password) VALUES ('admin', 'admin')
+  `);
   } catch (error) {
-    console.log("User admin already exists")
+    console.log("User admin already exists");
   }
-}();
+})();
 
-export default databaseConnectionPromise
+export default databaseConnectionPromise;
